@@ -16,14 +16,14 @@ var password_validation = {
 		return this.password_confirmation == p;
 	} ,
 	message: "Las contraseñas no son iguales"
+
 	}	
 
 
 var user_schema = new Schema({
 	name: String,
 	username: {type: String, required: true,maxlenght:[50,"Username es muy grande"]},
-	password: {
-		type: String, minlenght:[8,"El password es muy corto"], validate: password_validation},
+	password: {type:String,required: true,minlength:[8,"El password es muy corto"], validate: password_validation},
 	age: {type: Number,min:[18,"La edad no puede ser menor que 18 años"],max:[100,"La edad no puede ser mayor de 100 años"]},
 	email: {type: String, required: "El correo es obligatorio",match:email_match},
 	date_of_birth: Date,

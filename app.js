@@ -9,12 +9,6 @@ var session_middleware = require("./middlewares/session");
 
 
 /*montamos los middlewares*/
-/*para montar un middlewares hay que pasarlo como parámetro al método "use" 
-sobre el objeto "app" que se crea cuando ejecutamos la función "express()"
-archivos estáticos o  static: imagenes, css , javascript. (no presenta compilación
-por parte del servidor, y por ello se llaman estático y van en una carpeta)
-por defecto se utiliza la carpeta 'public' pero puede generan tantas carpetas 
-necesitas para crear/guadar archivos estáticos.*/
 app.use("/public",express.static('public'));  
 app.use(express.static('assets'));  
 
@@ -52,7 +46,7 @@ app.get("/",function(req,res){
 });
 
 app.get("/signup",function(req,res){
-	User.find(function(err,doc){  /*pasamos una condicion de busqueda https://youtu.be/AbELfRULn1U  min.11*/
+	User.find(function(err,doc){  
 		console.log(doc);
 		res.render("signup");
 	});
@@ -70,13 +64,23 @@ app.post("/users", function(req,res){
 							password_confirmation: req.body.password_confirmation,
 							username: req.body.username
 						});
-	//console.log(user.password_confirmation);
+	if (user.password !== '')
+		console.log('Se puede crear usuario');
 	user.save(function(err){
 		if(err){
 			console.log(String(err));
 		}
-		res.send("Guardamos tus datos")
-	});	
+	//	res.send(message)
+	if (user.password !== '')
+		//res.send("Guardamos tus datos")
+		res.redirect("/app");
+
+	
+	else
+		res.redirect("/signup")
+	
+
+});
 	
 });
 app.post("/sessions", function(req,res){
@@ -91,5 +95,5 @@ app.post("/sessions", function(req,res){
 
 app.use("/app",session_middleware);
 app.use("/app",router_app);
-app.listen(8080);
-console.log('conexion puerto 8080');
+app.listen(7070);
+console.log('conexion puerto 7070');
