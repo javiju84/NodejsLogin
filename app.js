@@ -74,7 +74,6 @@ app.post("/users", function(req,res){
 	if (user.password !== '')
 		//res.send("Guardamos tus datos")
 		res.redirect("/app");
-
 	
 	else
 		res.redirect("/signup")
